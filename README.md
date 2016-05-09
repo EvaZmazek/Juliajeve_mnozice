@@ -1,2 +1,2 @@
 # Juliajeve_mnozice
-2. projekt pri predmetu Programiranje 2
+drugi projekt pri predmetu Programiranje 2
