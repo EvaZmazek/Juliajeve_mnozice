@@ -101,12 +101,18 @@ public class Complex {
         return sum;
     }
 
+	public static Double razdalja_na_kvadrat(Complex x, Complex y){
+		Double a = x.re() - y.re();
+		Double b = x.im() - y.im();
+		return Math.abs(a)+Math.abs(b);
+	}
 
 
     // sample client for testing
-/*    public static void main(String[] args) {
+    public static void main(String[] args) {
         Complex a = new Complex(5.0, 6.0);
         Complex b = new Complex(-3.0, 4.0);
+        Double n = razdalja_na_kvadrat(a,b);
 
         System.out.println("a            = " + a);
         System.out.println("b            = " + b);
@@ -121,6 +127,7 @@ public class Complex {
         System.out.println("conj(a)      = " + a.conjugate());
         System.out.println("|a|          = " + a.abs());
         System.out.println("tan(a)       = " + a.tan());
-    }*/
+        System.out.println(n);
+    }
 
 }
