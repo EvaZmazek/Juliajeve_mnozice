@@ -17,13 +17,18 @@ public class Platno extends JPanel {
 	}
 	
 	public Dimension getPreferredSize(){
+		double x = okno.getWidth()-30;
+		double y = okno.getHeight()-30;
+		System.out.println(x);
+		System.out.println(y);
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		double width = screenSize.getWidth();
 		double height = screenSize.getHeight();
 		System.out.println(width);
 		System.out.println(height);
-		return new Dimension(
-				(int) Math.min(width, height/1.5), //slika.dimension.width),
-				(int) Math.max(200, height/1.5)); //hydra.dimension.height));
+		double a = Math.max(300, Math.min(x, y));
+		double b = Math.max(300, Math.min(width, height));
+		double c = Math.min(a, b);
+		return new Dimension((int) c, (int)c); //hydra.dimension.height));
 	}
 }
