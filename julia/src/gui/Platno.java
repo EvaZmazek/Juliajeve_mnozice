@@ -1,6 +1,7 @@
 package gui;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Toolkit;
 
 import javax.swing.JPanel;
 
@@ -16,8 +17,13 @@ public class Platno extends JPanel {
 	}
 	
 	public Dimension getPreferredSize(){
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		double width = screenSize.getWidth();
+		double height = screenSize.getHeight();
+		System.out.println(width);
+		System.out.println(height);
 		return new Dimension(
-				Math.max(300, 900), //hydra.dimension.width),
-				Math.max(200, 600)); //hydra.dimension.height));
+				(int) Math.min(width, height/1.5), //slika.dimension.width),
+				(int) Math.max(200, height/1.5)); //hydra.dimension.height));
 	}
 }

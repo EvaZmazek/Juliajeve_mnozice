@@ -1,5 +1,8 @@
 package algoritmi;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
+
 public class Complex {
     private final double re;   // the real part
     private final double im;   // the imaginary part
