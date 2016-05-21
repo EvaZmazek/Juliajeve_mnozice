@@ -24,6 +24,7 @@ public class Okno extends JFrame {
         izbranaMnozica = new javax.swing.JComboBox<>();
         narisi = new javax.swing.JButton();
         platno = new Slika();
+        
 
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentResized(java.awt.event.ComponentEvent evt) {
@@ -76,20 +77,32 @@ public class Okno extends JFrame {
         int H = 4;  
         Rectangle b = evt.getComponent().getBounds();
         evt.getComponent().setBounds(b.x, b.y, b.width, b.width+51*H/W);
+        
+        Slika.setDimensions(platno.getHeight());
     
         System.out.println(platno.getWidth()+" sirine in " + platno.getHeight() + " visine");
     }
     
     public void narisiActionPerformed(ActionEvent evt){
     	System.out.println(izbranaMnozica.getSelectedItem().toString()+" "+lambdaRe.getText()+" i"+lambdaIm.getText());
+    	Slika.setImagjuliaconst(Double.parseDouble(lambdaIm.getText()));
+    	Slika.setRealjuliaconst(Double.parseDouble(lambdaRe.getText()));
+    	this.repaint();
+ 
     }
     
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Okno().setVisible(true);
-            }
-        });
+    public static void main(String[] args) {
+        // TODO code application logic here
+        
+        Okno frame = new Okno();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+        frame.setSize(400, 400);
+        
+        Slika.setDimensions(frame.getWidth());
+        
+        Algoritmi.juliajeva(frame);
+        
     }
 
 
@@ -99,7 +112,8 @@ public class Okno extends JFrame {
 	public void setjPanel2(javax.swing.JPanel jPanel2) {
 		this.platno = jPanel2;
 	}
-
+	
+	
 
     private javax.swing.JComboBox<String> izbranaMnozica;
     private javax.swing.JPanel jPanel1;
