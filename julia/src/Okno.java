@@ -12,7 +12,7 @@ public class Okno extends JFrame {
      */
     public Okno() {
         initComponents();
-        platnoo.setSize(500, 500);
+        platno.setSize(500, 500);
     }
     
 
@@ -23,7 +23,7 @@ public class Okno extends JFrame {
         lambdaIm = new javax.swing.JTextField();
         izbranaMnozica = new javax.swing.JComboBox<>();
         narisi = new javax.swing.JButton();
-        platnoo = new javax.swing.JPanel();
+        platno = new Slika();
 
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentResized(java.awt.event.ComponentEvent evt) {
@@ -57,8 +57,8 @@ public class Okno extends JFrame {
 
         add(jPanel1, java.awt.BorderLayout.NORTH);
 
-        platnoo.setBackground(new java.awt.Color(0, 0, 0));
-        add(platnoo, java.awt.BorderLayout.CENTER);
+        platno.setBackground(new java.awt.Color(0, 0, 0));
+        add(platno, java.awt.BorderLayout.CENTER);
 
         pack();
     }
@@ -77,7 +77,7 @@ public class Okno extends JFrame {
         Rectangle b = evt.getComponent().getBounds();
         evt.getComponent().setBounds(b.x, b.y, b.width, b.width+51*H/W);
     
-        System.out.println(platnoo.getWidth()+" sirine in " + platnoo.getHeight() + " visine");
+        System.out.println(platno.getWidth()+" sirine in " + platno.getHeight() + " visine");
     }
     
     public void narisiActionPerformed(ActionEvent evt){
@@ -94,16 +94,16 @@ public class Okno extends JFrame {
 
 
     public javax.swing.JPanel getjPanel2() {
-		return platnoo;
+		return platno;
 	}
 	public void setjPanel2(javax.swing.JPanel jPanel2) {
-		this.platnoo = jPanel2;
+		this.platno = jPanel2;
 	}
 
 
     private javax.swing.JComboBox<String> izbranaMnozica;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel platnoo;
+    private javax.swing.JPanel platno;
     private javax.swing.JTextField lambdaRe;
     private javax.swing.JTextField lambdaIm;
     private javax.swing.JButton narisi;
