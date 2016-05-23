@@ -4,7 +4,7 @@ import java.awt.Graphics2D;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
-public class Slika extends JPanel{
+public class SlikaJulijajeva extends JPanel{
 	
 	 double realinput;
 	 double imaginput;
@@ -37,7 +37,7 @@ public class Slika extends JPanel{
 	}
 
 	public static void setRealjuliaconst(double realjuliaconst) {
-		Slika.realjuliaconst = realjuliaconst;
+		SlikaJulijajeva.realjuliaconst = realjuliaconst;
 	}
 
 	public static double getImagjuliaconst() {
@@ -45,7 +45,7 @@ public class Slika extends JPanel{
 	}
 
 	public static void setImagjuliaconst(double imagjuliaconst) {
-		Slika.imagjuliaconst = imagjuliaconst;
+		SlikaJulijajeva.imagjuliaconst = imagjuliaconst;
 	}
 
 	public static void setDimensions(int d) {
@@ -56,7 +56,7 @@ public class Slika extends JPanel{
 	Okno okno;
 
 		
-	public Slika() {
+	public SlikaJulijajeva() {
 		super();
 	}
 
@@ -140,10 +140,12 @@ public class Slika extends JPanel{
 		}
 	
 	public void sprehodi(Graphics h){
-		for(int i=1;i< dimensions;i+=100){
-			for(int j=1;j< dimensions;j+=100){
+		for(int i=1;i< dimensions;i+=20){
+			for(int j=1;j< dimensions;j+=20){
 				double a=pretvoriX(i);
 				double b=pretvoriY(j);
+				h.setColor(Color.BLACK);
+				h.drawRect(i, j, 5, 5);
 				//h.drawRect(i, j, 5, 5);
 				//Complex x = new Complex(a,b);
 				//System.out.println(x);
