@@ -23,7 +23,7 @@ public class Okno extends JFrame {
         lambdaIm = new javax.swing.JTextField();
         izbranaMnozica = new javax.swing.JComboBox<>();
         narisi = new javax.swing.JButton();
-        platno = new SlikaJulijajeva();
+        platno = new Slika();
         
 
         addComponentListener(new java.awt.event.ComponentAdapter() {
@@ -78,15 +78,17 @@ public class Okno extends JFrame {
         Rectangle b = evt.getComponent().getBounds();
         evt.getComponent().setBounds(b.x, b.y, b.width, b.width+51*H/W);
         
-        SlikaJulijajeva.setDimensions(platno.getHeight());
+        Slika.setDimensions(platno.getHeight());
+        
     
         System.out.println(platno.getWidth()+" sirine in " + platno.getHeight() + " visine");
-    }
+        }
     
     public void narisiActionPerformed(ActionEvent evt){
     	System.out.println(izbranaMnozica.getSelectedItem().toString()+" "+lambdaRe.getText()+" i"+lambdaIm.getText());
-    	SlikaJulijajeva.setImagjuliaconst(Double.parseDouble(lambdaIm.getText()));
-    	SlikaJulijajeva.setRealjuliaconst(Double.parseDouble(lambdaRe.getText()));
+		Slika.setImagjuliaconst(Double.parseDouble(lambdaIm.getText()));
+    	Slika.setRealjuliaconst(Double.parseDouble(lambdaRe.getText()));
+    	Slika.setMnozica(izbranaMnozica.getSelectedItem().toString());
     	this.repaint();
  
     }
@@ -99,9 +101,9 @@ public class Okno extends JFrame {
         frame.setVisible(true);
         frame.setSize(400, 400);
         
-        SlikaJulijajeva.setDimensions(frame.getWidth());
+        //SlikaJulijajeva.setDimensions(frame.getWidth());
         
-        Algoritmi.juliajeva(frame);
+        //Algoritmi.juliajeva(frame);
         
     }
 
