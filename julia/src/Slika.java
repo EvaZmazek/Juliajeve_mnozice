@@ -77,48 +77,44 @@ public class Slika extends JPanel{
 		  imagpart = 1.5;
 		  realinc = 0.01;
 		  imaginc = 0.01;
-		 
+		  
 		  g.setColor(Color.white);
-//		  g.drawString(realjuliaconst+" + "+imagjuliaconst+"i",160,42);
-		 
-		   realpart = realpart - realinc; // this is done once so realpart is at boundary on 1st pass
+		  System.out.println("pretvori"+pretvoriX(200) + pretvoriY(201));
+		  
+		  realpart = realpart - realinc; // this is done once so realpart is at boundary on 1st pass
 		   
-		     for (int x = 0 ; x < dimensions; x++) {
-
-		     realpart = realpart + realinc;
-		     imagpart = 1.51;  // reset to top of window
-
-		     for (int y = 0 ; y < dimensions; y++) {
-				 double i=pretvoriX(x);
-				 double j=pretvoriY(y);
-				 
-		       imagpart = imagpart - imaginc;
-		 
-		       storerealpart = realpart; // store current location in complex plane
-		       storeimagpart = imagpart;
-		       
-		       a = realpart; 
-		       b = imagpart; 
-		       i = 0; 
-		       diverge = false; // a and b are the current point
-		 
-		         while (i < 100) {
-		           btemp = 2*a*b; // store this product otherwise it would also effect value of a
-		           a = a*a - b*b + realjuliaconst;
-		           b = btemp + imagjuliaconst;
-		           if ( (a*a + b*b) > 4 ) {diverge=true; break;} 
-		           i++;
-		         }
-
-
-		       if (diverge==true) {
-						if (i<20) g.setColor(Color.gray);
-		                                if (i>19 && i<40) g.setColor(Color.red);
-		                                if (i>39 && i<60) g.setColor(Color.green);
-		                                if (i>59 && i<80) g.setColor(Color.yellow);
-		                                if (i>79) g.setColor(Color.white);
-						g.drawRect(x, y, 0, 0);
-		                           } 
+		  for (int x = 0 ; x < dimensions; x++) {
+			  realpart = realpart + realinc;
+			  imagpart = 1.51;  // reset to top of window
+			  
+			  for (int y = 0 ; y < dimensions; y++) {
+				  double i=pretvoriX(x);
+				  double j=pretvoriY(y);
+				  imagpart = imagpart - imaginc;
+				  storerealpart = realpart; // store current location in complex plane
+				  storeimagpart = imagpart;
+				  
+				  a = realpart; 
+				  b = imagpart; 
+				  i = 0; 
+				  diverge = false; // a and b are the current point
+				  
+				  while (i < 100) {
+					  btemp = 2*a*b; // store this product otherwise it would also effect value of a
+					  a = a*a - b*b + realjuliaconst;
+					  b = btemp + imagjuliaconst;
+					  if ( (a*a + b*b) > 4 ) {diverge=true; break;} 
+					  i++;
+					  }
+				  
+				 if (diverge==true) {
+					 if (i<20) g.setColor(Color.gray);
+					 if (i>19 && i<40) g.setColor(Color.red);
+					 if (i>39 && i<60) g.setColor(Color.green);
+					 if (i>59 && i<80) g.setColor(Color.yellow);
+					 if (i>79) g.setColor(Color.white);
+					 g.drawRect(x, y, 0, 0);
+					 } 
 		                           
 		     
 		      realpart = storerealpart; // restore value of current point
@@ -143,18 +139,18 @@ public class Slika extends JPanel{
 		return -pretvoriX(y);
 		}
 	
-	public void sprehod(){
-//		canvas = new BufferedImage(sirina, sirina, BufferedImage.TYPE_INT_ARGB);
-		double imkorak=0.01;
-		double Rekorak=0.01;
-		for(int i=1;i< dimensions;i+=10){
+	public void sprehodi(Graphics h){
+		for(int i=1;i< dimensions;i+=100){
 			for(int j=1;j< dimensions;j+=100){
 				double a=pretvoriX(i);
 				double b=pretvoriY(j);
+				//h.drawRect(i, j, 5, 5);
+				//Complex x = new Complex(a,b);
+				//System.out.println(x);
 				i = 0; 
 			    diverge = false; // a and b are the current point
 			 
-			    while (i < 100) {
+			   /* while (i < 100) {
 			    	btemp = 2*a*b; // store this product otherwise it would also effect value of a
 			    	a = a*a - b*b + realjuliaconst;
 			    	b = btemp + imagjuliaconst;
@@ -171,8 +167,8 @@ public class Slika extends JPanel{
 			                                if (i>79) h.setColor(Color.white);
 							h.drawRect(i, j, 3, 3);
 			                           }
+*/
 			}
 		}
 	}
-
 }
