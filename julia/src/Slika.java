@@ -93,92 +93,43 @@ public class Slika extends JPanel{
 	}
 
 	private void sprehodJulia(Graphics g) {
-		
-		  realpart = -1.5;
-		  imagpart = 1.5;
-		  realinc = 0.01;
-		  imaginc = 0.01;
-		  
-		  g.setColor(Color.white);
-		  System.out.println("pretvori"+pretvoriX(200) + pretvoriY(201));
-		  
-		  realpart = realpart - realinc; // this is done once so realpart is at boundary on 1st pass
-		   
-		  for (int x = 0 ; x < dimensions; x++) {
-			  realpart = realpart + realinc;
-			  imagpart = 1.51;  // reset to top of window
-			  
-			  for (int y = 0 ; y < dimensions; y++) {
-				  double i=pretvoriX(x);
-				  double j=pretvoriY(y);
-				  imagpart = imagpart - imaginc;
-				  storerealpart = realpart; // store current location in complex plane
-				  storeimagpart = imagpart;
-				  
-				  a = realpart; 
-				  b = imagpart; 
-				  i = 0; 
-				  diverge = false; // a and b are the current point
-				  
-				  while (i < 100) {
+		for(int l=1;l< dimensions;l+=1){
+			for(int j=1;j< dimensions;j+=1){
+				double a = pretvoriX(l);
+				double b = pretvoriY(j);
+				g.setColor(Color.CYAN);
+				//g.drawRect(l, j, 10, 10);
+				//System.out.println(a+"....."+b);
+				i = 0;
+				while (i < 100) {
 					  btemp = 2*a*b; // store this product otherwise it would also effect value of a
 					  a = a*a - b*b + realjuliaconst;
 					  b = btemp + imagjuliaconst;
 					  if ( (a*a + b*b) > 4 ) {diverge=true; break;} 
 					  i++;
-					  }
-				  
+					  } 
 				  if (diverge==true) {
-						 if (i<20) g.setColor(Color.BLACK);
+						 if (i<20) g.setColor(Color.white);
 						 if (i>19 && i<40) g.setColor(Color.ORANGE);
 						 if (i>39 && i<60) g.setColor(Color.red);
 						 if (i>59 && i<80) g.setColor(Color.orange);
 						 if (i>79) g.setColor(Color.RED);
-						 //g.drawRect(x, y, 0, 0);
-						 //čudno raztegovanje
-						 g.drawRect(x*dimensions/300, y*dimensions/300, 0, 0);
-						 
-						 } 
-			               
-		                           
-		     
-		      realpart = storerealpart; // restore value of current point
-		      imagpart = storeimagpart;
-
-		     } // end y loop
-
-		   } // end x loop
+						 g.drawRect(l, j, 0, 0);
+						 }
+		     }
+		   }
 	}
 	
 	private void sprehodMandelbrotova(Graphics g) {
-		
-		  realpart = -1.5;
-		  imagpart = 1.5;
-		  realinc = 0.01;
-		  imaginc = 0.01;
-		  
-		  g.setColor(Color.white);
-		  System.out.println("pretvori"+pretvoriX(200) + pretvoriY(201));
-		  
-		  realpart = realpart - realinc; // this is done once so realpart is at boundary on 1st pass
-		   
-		  for (int x = 0 ; x < dimensions; x++) {
-			  realpart = realpart + realinc;
-			  imagpart = 1.51;  // reset to top of window
-			  
-			  for (int y = 0 ; y < dimensions; y++) {
-				  double i=pretvoriX(x);
-				  double j=pretvoriY(y);
-				  imagpart = imagpart - imaginc;
-				  storerealpart = realpart; // store current location in complex plane
-				  storeimagpart = imagpart;
-				  
-				  a = realpart; 
-				  b = imagpart; 
-				  i = 0; 
-				  diverge = false; // a and b are the current point
-				  
-				  while (i < 100) {
+		for(int l=1;l< dimensions;l+=1){
+			for(int j=1;j< dimensions;j+=1){
+				double a = pretvoriX(l);
+				double b = pretvoriY(j);
+				g.setColor(Color.CYAN);
+				//g.drawRect(l, j, 10, 10);
+				//System.out.println(a+"....."+b);
+				i = 0;
+				while (i < 100) {
 					  btemp = 2*a*b; // store this product otherwise it would also effect value of a
 					  a = a*a - b*b + realjuliaconst;
 					  b = btemp + imagjuliaconst;
@@ -191,22 +142,17 @@ public class Slika extends JPanel{
 					 if (i>39 && i<60) g.setColor(Color.DARK_GRAY); 
 					 if (i>59 && i<80) g.setColor(Color.GRAY);
 					 if (i>79) g.setColor(Color.darkGray);
-					 g.drawRect(x, y, 0, 0);
+					 g.drawRect(l, j, 0, 0);
 					 }             
-		     
-		      realpart = storerealpart; // restore value of current point
-		      imagpart = storeimagpart;
-
-		     } // end y loop
-
-		   } // end x loop
+		     }
+		   }
 	}
 	
 	private void sprehodIFS(Graphics g) {
-		for(int i=1;i< dimensions;i+=20){
+		for(int l=1;l< dimensions;l+=20){
 			for(int j=1;j< dimensions;j+=20){
 				g.setColor(Color.CYAN);
-				g.drawRect(i, j, 10, 10);
+				g.drawRect(l, j, 10, 10);
 			}
 		}
 	}
@@ -224,40 +170,4 @@ public class Slika extends JPanel{
 	public double pretvoriY(int y){
 		return -pretvoriX(y);
 		}
-	
-	//pripravljena verzija za boljšo sliko (ki se razteguje)
-	public void sprehodi(Graphics h){
-		for(int i=1;i< dimensions;i+=20){
-			for(int j=1;j< dimensions;j+=20){
-				double a=pretvoriX(i);
-				double b=pretvoriY(j);
-				h.setColor(Color.BLACK);
-				h.drawRect(i, j, 5, 5);
-				//h.drawRect(i, j, 5, 5);
-				//Complex x = new Complex(a,b);
-				//System.out.println(x);
-				i = 0; 
-			    diverge = false; // a and b are the current point
-			 
-			   /* while (i < 100) {
-			    	btemp = 2*a*b; // store this product otherwise it would also effect value of a
-			    	a = a*a - b*b + realjuliaconst;
-			    	b = btemp + imagjuliaconst;
-			    	if ( (a*a + b*b) > 4 ) {diverge=true; break;} 
-			    	i++;
-			    	}
-
-
-			       if (diverge==true) {
-							if (i<20) h.setColor(Color.gray);
-			                                if (i>19 && i<40) h.setColor(Color.red);
-			                                if (i>39 && i<60) h.setColor(Color.green);
-			                                if (i>59 && i<80) h.setColor(Color.yellow);
-			                                if (i>79) h.setColor(Color.white);
-							h.drawRect(i, j, 3, 3);
-			                           }
-*/
-			}
-		}
-	}
 }
