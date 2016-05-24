@@ -134,7 +134,10 @@ public class Slika extends JPanel{
 						 if (i>39 && i<60) g.setColor(Color.red);
 						 if (i>59 && i<80) g.setColor(Color.orange);
 						 if (i>79) g.setColor(Color.RED);
-						 g.drawRect(x, y, 0, 0);
+						 //g.drawRect(x, y, 0, 0);
+						 //čudno raztegovanje
+						 g.drawRect(x*dimensions/300, y*dimensions/300, 0, 0);
+						 
 						 } 
 			               
 		                           
