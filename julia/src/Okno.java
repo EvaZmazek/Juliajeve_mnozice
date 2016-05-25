@@ -21,6 +21,7 @@ public class Okno extends JFrame {
         jPanel1 = new javax.swing.JPanel();
         lambdaRe = new javax.swing.JTextField();
         lambdaIm = new javax.swing.JTextField();
+ //       lambdaIm2 = new javax.swing.JTextField();
         izbranaMnozica = new javax.swing.JComboBox<>();
         narisi = new javax.swing.JButton();
         platno = new Slika();
@@ -44,6 +45,9 @@ public class Okno extends JFrame {
 
         lambdaIm.setText("0.11");
         jPanel1.add(lambdaIm, new java.awt.GridBagConstraints());
+        
+//        lambdaIm2.setText("0.11");
+//        jPanel1.add(lambdaIm2, new java.awt.GridBagConstraints());
 
         izbranaMnozica.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Juliajeva", "Mandelbrotova", "IFS" }));
         jPanel1.add(izbranaMnozica, new java.awt.GridBagConstraints());
@@ -122,6 +126,7 @@ public class Okno extends JFrame {
     private javax.swing.JPanel platno;
     private javax.swing.JTextField lambdaRe;
     private javax.swing.JTextField lambdaIm;
+//    private javax.swing.JTextField lambdaIm2;
     private javax.swing.JButton narisi;
 
 }
