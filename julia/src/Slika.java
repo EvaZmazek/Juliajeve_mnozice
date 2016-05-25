@@ -182,12 +182,6 @@ public class Slika extends JPanel{
 		}
 	}
 
-	public Double razdalja_na_kvadrat(Complex x, Complex y){
-		Double a = x.re() - y.re();
-		Double b = x.im() - y.im();
-		return Math.abs(a)+Math.abs(b);
-	}
-
 	public double pretvoriX(int x){
 		return (((double)x*3)/dimensions)-1.5;
 	}
