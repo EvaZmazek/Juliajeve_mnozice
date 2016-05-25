@@ -19,8 +19,6 @@ public class Slika extends JPanel{
 	
 //	za Mandelbrot
     private final int MAX_ITER = 570;
-    private final double ZOOM = 150;
-    private BufferedImage I;
     private double zx, zy, cX, cY, tmp;
 
 	public String getMnozica() {
@@ -87,7 +85,7 @@ public class Slika extends JPanel{
 			for(int j=1;j< dimensions;j+=1){
 				double a = pretvoriX(l);
 				double b = pretvoriY(j);
-				g.setColor(Color.CYAN);
+				g.setColor(Color.white);
 				i = 0;
 				while (i < 100) {
 					btemp = 2*a*b;
@@ -114,53 +112,61 @@ public class Slika extends JPanel{
 	}
 
 	private void sprehodMandelbrotova(Graphics g) {
-		
-//		for(int l=1;l< dimensions;l+=1){
-//			for(int j=1;j< dimensions;j+=1){
-//				double a = pretvoriX(l);
-//				double b = pretvoriY(j);
-//				g.setColor(Color.CYAN);
-//				i = 0;
-//				while (i < 100) {
-//					btemp = 2*a*b; 
-//					a = a*a - b*b + realjuliaconst;
-//					b = btemp + imagjuliaconst;
-//					if ( (a*a + b*b) > 4 ) {diverge=true; break;} 
-//					i++;
-//				}
-//				if (diverge==true) {
-//					if (i<20) 
-//						g.setColor(Color.black);
-//					if (i>19 && i<40) 
-//						g.setColor(Color.gray);
-//					if (i>39 && i<60) 
-//						g.setColor(Color.DARK_GRAY); 
-//					if (i>59 && i<80) 
-//						g.setColor(Color.GRAY);
-//					if (i>79) 
-//						g.setColor(Color.darkGray);
-//					g.drawRect(l, j, 0, 0);
-//				}             
-//			}
-//		}
 		for (int y = 0; y < dimensions; y++) {
-            for (int x = 0; x < dimensions; x++) {
-                zx = zy = 0;
-                cX = pretvoriX((x)); // ZOOM;
-                cY = pretvoriY((y)); // ZOOM;
-                int iter = MAX_ITER;
-                while (zx * zx + zy * zy < 4 && iter > 0) {
-                    tmp = zx * zx - zy * zy + cX;
-                    zy = 2.0 * zx * zy + cY;
-                    zx = tmp;
-                    iter--;
-                }
-                g.setColor(Color.black);
-                if(iter<8){
-                g.drawRect(x, y, 1, 1);
-            }}
-            }
+			for (int x = 0; x < dimensions; x++) {
+				zx = zy = 0;
+				cX = pretvoriX((x));
+				cY = pretvoriY((y));
+				int iter = MAX_ITER;
+				g.setColor(Color.white);
+				while (zx * zx + zy * zy < 4 && iter > 0) {
+					tmp = zx * zx - zy * zy + cX;
+					zy = 2.0 * zx * zy + cY;
+					zx = tmp;
+					iter--;
+				}
+
+				if(iter<8){
+					g.setColor(Color.black);
+					g.drawRect(x, y, 1, 1);
+				}
+				if(iter < 550 && iter >= 8){
+					g.setColor(Color.BLUE);
+					g.drawRect(x, y, 1, 1);
+				}
+				if(iter < 560 && iter >= 550){
+					g.setColor(Color.DARK_GRAY);
+					g.drawRect(x, y, 1, 1);
+				}
+				if(iter < 565 && iter >= 560){
+					g.setColor(Color.LIGHT_GRAY);
+					g.drawRect(x, y, 1, 1);
+				}
+				if(iter < 567 && iter >= 565){
+					g.setColor(Color.white);
+					g.drawRect(x, y, 1, 1);
+				}
+				if(iter < 568 && iter >= 567){
+					g.setColor(Color.LIGHT_GRAY);
+					g.drawRect(x, y, 1, 1);
+				}
+				if(iter < 569 && iter >= 568){
+					g.setColor(Color.white);
+					g.drawRect(x, y, 1, 1);
+				}
+				if(iter < 569.5 && iter >= 569){
+					g.setColor(Color.LIGHT_GRAY);
+					g.drawRect(x, y, 1, 1);
+				}
+				if(iter >= 569.5){
+					g.setColor(Color.white);
+					g.drawRect(x, y, 1, 1);
+				}
+				
+			}
+		}
 	}
+	
 
 	private void sprehodIFS(Graphics g) {
 		for(int l=1;l< dimensions;l+=20){
