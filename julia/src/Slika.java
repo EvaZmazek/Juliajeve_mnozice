@@ -1,10 +1,16 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.File;
+
+import javax.imageio.ImageIO;
+import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class Slika extends JPanel{
-
+	BufferedImage bi = new BufferedImage(dimensions+1, dimensions+1, BufferedImage.TYPE_INT_ARGB); 
+	Graphics g = bi.createGraphics();
 	double realinput;
 	double imaginput;
 
@@ -75,6 +81,8 @@ public class Slika extends JPanel{
 	public void paint(Graphics g){
 		if(mnozica=="Juliajeva"){
 			sprehodJulia(g);
+			g.dispose();
+			try{ImageIO.write(bi,"png",new File("test.png"));}catch (Exception e) {}
 		}
 		if(mnozica=="Mandelbrotova"){
 			sprehodMandelbrotova(g);
@@ -182,6 +190,7 @@ public class Slika extends JPanel{
 		}
 	}
 
+	
 	public double pretvoriX(int x){
 		return (((double)x*3)/dimensions)-1.5;
 	}

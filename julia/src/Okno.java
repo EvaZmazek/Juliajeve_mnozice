@@ -1,7 +1,12 @@
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+
+import javax.imageio.ImageIO;
 import javax.swing.JColorChooser;
 import javax.swing.JFrame;
 
@@ -27,6 +32,7 @@ public class Okno extends JFrame {
 //        izbranaBarva = new javax.swing.JComboBox<>();
         narisi = new javax.swing.JButton();
         barvaj = new javax.swing.JButton();
+        shrani = new javax.swing.JButton();
         platno = new Slika();
         
 
@@ -73,6 +79,14 @@ public class Okno extends JFrame {
         	}
         });
         jPanel1.add(barvaj, new java.awt.GridBagConstraints());
+        
+        shrani.setText("Shrani");
+        shrani.addActionListener(new java.awt.event.ActionListener() {
+        	public void actionPerformed(java.awt.event.ActionEvent evt) {
+        		shraniActionPerformed(evt);
+        	}
+        });
+        jPanel1.add(shrani, new java.awt.GridBagConstraints());
 
         add(jPanel1, java.awt.BorderLayout.NORTH);
 
@@ -107,8 +121,7 @@ public class Okno extends JFrame {
 		Slika.setImagjuliaconst(Double.parseDouble(lambdaIm.getText()));
     	Slika.setRealjuliaconst(Double.parseDouble(lambdaRe.getText()));
     	Slika.setMnozica(izbranaMnozica.getSelectedItem().toString());
-//    	Slika.setMnozica(izbranaBarva.getSelectedItem().toString());
-    	this.repaint(); 
+    	this.repaint();
     }
     
     public void barvajActionPerformed(ActionEvent evt){
@@ -121,13 +134,21 @@ public class Okno extends JFrame {
     	this.repaint();
     }
     
+    public void shraniActionPerformed(ActionEvent evt){
+    	BufferedImage bi = new BufferedImage(this.getSize().width, this.getSize().height, BufferedImage.TYPE_INT_ARGB); 
+    	Graphics g = bi.createGraphics();
+    	this.paint(g);
+		g.dispose();
+		try{ImageIO.write(bi,"png",new File("test1.png"));}catch (Exception e) {}
+    }
+    
     public static void main(String[] args) {
         // TODO code application logic here
         
         Okno frame = new Okno();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
-        frame.setSize(400, 400);
+        frame.setSize(500, 500);
         
         //SlikaJulijajeva.setDimensions(frame.getWidth());
         
@@ -153,5 +174,6 @@ public class Okno extends JFrame {
 //    private javax.swing.JTextField lambdaIm2;
     private javax.swing.JButton narisi;
     private javax.swing.JButton barvaj;
+    private javax.swing.JButton shrani;
 
 }
