@@ -5,10 +5,13 @@ import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.JColorChooser;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 @SuppressWarnings("serial")
 public class Okno extends JFrame {
@@ -29,7 +32,6 @@ public class Okno extends JFrame {
         lambdaIm = new javax.swing.JTextField();
  //       lambdaIm2 = new javax.swing.JTextField();
         izbranaMnozica = new javax.swing.JComboBox<>();
-//        izbranaBarva = new javax.swing.JComboBox<>();
         narisi = new javax.swing.JButton();
         barvaj = new javax.swing.JButton();
         shrani = new javax.swing.JButton();
@@ -60,9 +62,6 @@ public class Okno extends JFrame {
 
         izbranaMnozica.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Juliajeva", "Mandelbrotova", "IFS" }));
         jPanel1.add(izbranaMnozica, new java.awt.GridBagConstraints());
-        
-//        izbranaBarva.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "pisana", "rdeca", "modra" }));
-//        jPanel1.add(izbranaBarva, new java.awt.GridBagConstraints());
         
         narisi.setText("Narisi");
         narisi.addActionListener(new java.awt.event.ActionListener() {
@@ -135,11 +134,31 @@ public class Okno extends JFrame {
     }
     
     public void shraniActionPerformed(ActionEvent evt){
-    	BufferedImage bi = new BufferedImage(this.getSize().width, this.getSize().height, BufferedImage.TYPE_INT_ARGB); 
+/*    	BufferedImage bi = new BufferedImage(this.getSize().width, this.getSize().height, BufferedImage.TYPE_INT_ARGB); 
     	Graphics g = bi.createGraphics();
     	this.paint(g);
 		g.dispose();
-		try{ImageIO.write(bi,"png",new File("test1.png"));}catch (Exception e) {}
+		try{ImageIO.write(bi,"png",new File("test2.png"));}catch (Exception e) {}*/
+		BufferedImage screenshot = new BufferedImage(platno.getWidth(),platno.getHeight(), BufferedImage.TYPE_INT_ARGB);
+		platno.paint(screenshot.getGraphics());
+		
+		try {
+			JFileChooser fileChooser = new JFileChooser();
+			FileNameExtensionFilter filter = new FileNameExtensionFilter(".png", "png");
+			fileChooser.setFileFilter(filter);
+			int returnValue = fileChooser.showSaveDialog(this);
+			if (returnValue == JFileChooser.APPROVE_OPTION) {
+				File izbranaDatoteka = fileChooser.getSelectedFile();
+				if (!izbranaDatoteka.getPath().toLowerCase().endsWith(".png")) {
+					File popravljenaDatoteka = new File(izbranaDatoteka.getPath() + ".png");
+					ImageIO.write(screenshot, "PNG", popravljenaDatoteka);
+				} else {
+					ImageIO.write(screenshot, "PNG", izbranaDatoteka);
+				}
+			}
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();}
     }
     
     public static void main(String[] args) {
@@ -151,8 +170,6 @@ public class Okno extends JFrame {
         frame.setSize(500, 500);
         
         //SlikaJulijajeva.setDimensions(frame.getWidth());
-        
-        //Algoritmi.juliajeva(frame);
         
     }
 

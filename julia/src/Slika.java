@@ -1,16 +1,9 @@
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
-import java.io.File;
-
-import javax.imageio.ImageIO;
-import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class Slika extends JPanel{
-	BufferedImage bi = new BufferedImage(dimensions+1, dimensions+1, BufferedImage.TYPE_INT_ARGB); 
-	Graphics g = bi.createGraphics();
 	double realinput;
 	double imaginput;
 
@@ -20,7 +13,7 @@ public class Slika extends JPanel{
 	double btemp;
 	boolean diverge;
 	int i;	
-	private final int maxJuliajeva = 570;
+	protected final int maxJuliajeva = 570;
 
 	static String mnozica;
 	static Color barva;
@@ -45,9 +38,9 @@ public class Slika extends JPanel{
 		Slika.mnozica = mnozica;
 	}
 
-	private static int dimensions;
-	private static double realjuliaconst;
-	private static double imagjuliaconst;
+	protected static int dimensions;
+	protected static double realjuliaconst;
+	protected static double imagjuliaconst;
 
 	public static int getDimensions() {
 		return dimensions;
@@ -79,10 +72,23 @@ public class Slika extends JPanel{
 	}
 
 	public void paint(Graphics g){
+		if(mnozica == null){
+			g.drawString("Navodila:", 20, 20);
+			g.drawString("⦁$izberi množico, ki jo želiš prikazati", 20, 40);
+			g.drawString("⦁$pritisni gumb nariši", 20, 60);
+			g.drawString("⦁če želiš izbrati barvo slike, stisni gumb barvaj in izberi barvo", 20, 80);
+			g.drawString("⦁$→če želiš shraniti svojo slikico, stisni gumb shrani in poimenuj svojo sliko", 20, 100);
+			g.drawString("Fraktali:", 20, 220);
+			g.drawString("Madelbrotova množica je v množica točk "
+					+ "v kompleksni ravnini, ", 40, 240);
+			g.drawString("katere meja tvori fraktal. To je množica kompleksnih vrednosti c,", 40, 260);
+			g.drawString("za katere orbita vrednosti 0 pod iteracijo kompleksnega kvadratnega", 40, 280);
+			g.drawString("polinoma zn+1 = zn2 + c ostaja omejena.", 40, 300);
+		}
+		//g.drawString("nariši svojo množico",0,0);
 		if(mnozica=="Juliajeva"){
 			sprehodJulia(g);
-			g.dispose();
-			try{ImageIO.write(bi,"png",new File("test.png"));}catch (Exception e) {}
+//			Juliajeva.sprehod(g);
 		}
 		if(mnozica=="Mandelbrotova"){
 			sprehodMandelbrotova(g);
