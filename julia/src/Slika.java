@@ -120,17 +120,29 @@ public class Slika extends JPanel{
 					if ( (a*a + b*b) > 4 ) {diverge=true; break;} 
 					i++;
 				} 
+//				zakomentirana verzija je prejšnja verzija (ne briši) - meni lepša ampak 
+//				ne izrisuje ok na windowsih -.- in ne sharnjuje ok slike :(
+//				
 				if (diverge==true) {
 					if (i<20) 
-						g.setColor(new Color(R,G,B,alpha/50));
+						g.setColor(Color.white);
+//						g.setColor(new Color(R, G, B, alpha/200));
+//						g.setColor(new Color(R,G,B,alpha/50));
+//					if (i>=20 && i<30) 
+//						g.setColor(new Color(R,G,B, alpha));
+//						g.setColor(new Color(R,G,B,alpha/50));
 					if (i>19 && i<40) 
-						g.setColor(new Color(R,G,B,(float) (alpha/(1.1))));
+						g.setColor(new Color(R, G, B, alpha/3));
+//						g.setColor(new Color(R,G,B,(float) (alpha/(1.1))));
 					if (i>39 && i<60) 
-						g.setColor(new Color(R/4,G/4,B/4,alpha));
+						g.setColor(new Color(R, G, B, alpha));
+//						g.setColor(new Color(R/4,G/4,B/4,alpha));
 					if (i>59 && i<80) 
-						g.setColor(new Color(R,G,B,alpha/2));
+						g.setColor(new Color(R, G, B, alpha/6));
+//						g.setColor(new Color(R,G,B,alpha/2));
 					if (i>79) 
-						g.setColor(new Color(R/6,G/6,B/6,alpha));
+						g.setColor(new Color(R, G, B, alpha));
+//						g.setColor(new Color(R/6,G/6,B/6,alpha));
 					g.drawRect(l, j, 0, 0);
 				}
 			}

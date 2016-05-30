@@ -71,7 +71,7 @@ public class Okno extends JFrame {
         });
         jPanel1.add(narisi, new java.awt.GridBagConstraints());
         
-        barvaj.setText("barvaj");
+        barvaj.setText("Barvaj");
         barvaj.addActionListener(new java.awt.event.ActionListener() {
         	public void actionPerformed(java.awt.event.ActionEvent evt) {
         		barvajActionPerformed(evt);
