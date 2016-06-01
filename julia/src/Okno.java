@@ -1,6 +1,4 @@
-
 import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
@@ -13,6 +11,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+
 @SuppressWarnings("serial")
 public class Okno extends JFrame {
 
@@ -24,19 +23,21 @@ public class Okno extends JFrame {
         platno.setSize(500, 500);
     }
     
-
+//	komponente v oknu
     private void initComponents() {
-
-        jPanel1 = new javax.swing.JPanel();
-        lambdaRe = new javax.swing.JTextField();
-        lambdaIm = new javax.swing.JTextField();
- //       lambdaIm2 = new javax.swing.JTextField();
-        izbranaMnozica = new javax.swing.JComboBox<>();
-        narisi = new javax.swing.JButton();
-        barvaj = new javax.swing.JButton();
-        shrani = new javax.swing.JButton();
-        platno = new Slika();
+        jPanel1 = new javax.swing.JPanel();	//platno, na katerem so gumbi in okna za pisat
+        lambdaRe = new javax.swing.JTextField();	//vnosno polje za realni del spremenljivke (Juliajeva množica)
+        lambdaIm = new javax.swing.JTextField();	//vnosno polje za imaginarni del spremenljivke (Juliajeva množica)
+        izbranaMnozica = new javax.swing.JComboBox<>();	//izbor množice, ki jo naj nariše
+        narisi = new javax.swing.JButton();	//gumb "nariši"
+        barvaj = new javax.swing.JButton(); //gumb "barvaj"
+        shrani = new javax.swing.JButton();	//gumb "shrani"
+        platno = new Slika();	//glavno platno, ki nariše sliko
         
+//      BRIŠI DEL
+//      lambdaIm2 = new javax.swing.JTextField(); če bi rabli več spremenljivk 
+//        lambdaIm2.setText("0.11");
+//        jPanel1.add(lambdaIm2, new java.awt.GridBagConstraints());
 
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentResized(java.awt.event.ComponentEvent evt) {
@@ -57,9 +58,6 @@ public class Okno extends JFrame {
         lambdaIm.setText("0.11");
         jPanel1.add(lambdaIm, new java.awt.GridBagConstraints());
         
-//        lambdaIm2.setText("0.11");
-//        jPanel1.add(lambdaIm2, new java.awt.GridBagConstraints());
-
         izbranaMnozica.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Juliajeva", "Mandelbrotova", "IFS" }));
         jPanel1.add(izbranaMnozica, new java.awt.GridBagConstraints());
         
@@ -108,15 +106,10 @@ public class Okno extends JFrame {
         int H = 4;  
         Rectangle b = evt.getComponent().getBounds();
         evt.getComponent().setBounds(b.x, b.y, b.width, b.width+51*H/W);
-        
         Slika.setDimensions(platno.getHeight());
-        
-    
-        System.out.println(platno.getWidth()+" sirine in " + platno.getHeight() + " visine");
         }
     
     public void narisiActionPerformed(ActionEvent evt){
-    	System.out.println(izbranaMnozica.getSelectedItem().toString()+" "+lambdaRe.getText()+" i"+lambdaIm.getText());
 		Slika.setImagjuliaconst(Double.parseDouble(lambdaIm.getText()));
     	Slika.setRealjuliaconst(Double.parseDouble(lambdaRe.getText()));
     	Slika.setMnozica(izbranaMnozica.getSelectedItem().toString());
@@ -134,11 +127,6 @@ public class Okno extends JFrame {
     }
     
     public void shraniActionPerformed(ActionEvent evt){
-/*    	BufferedImage bi = new BufferedImage(this.getSize().width, this.getSize().height, BufferedImage.TYPE_INT_ARGB); 
-    	Graphics g = bi.createGraphics();
-    	this.paint(g);
-		g.dispose();
-		try{ImageIO.write(bi,"png",new File("test2.png"));}catch (Exception e) {}*/
 		BufferedImage screenshot = new BufferedImage(platno.getWidth(),platno.getHeight(), BufferedImage.TYPE_INT_ARGB);
 		platno.paint(screenshot.getGraphics());
 		
