@@ -1,23 +1,34 @@
 import java.awt.Color;
 import java.awt.Graphics;
+
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class Slika extends JPanel{
-	double realinput;
-	double imaginput;
+	
+// Parametri:
+	static String mnozica;
+	static Color barva;
+	protected static int dimensions;
 
 	//	za Juliajevo
-	double realpart; 
-	double imagpart;  
+	static double re; 
+	static double im;  
 	double btemp;
 	boolean diverge;
 	int i;	
 	protected final int maxJuliajeva = 570;
 
-	static String mnozica;
-	static Color barva;
+	//	za Mandelbrot
+	private final int maxMandelbrot = 570;
+	private double zx, zy, cX, cY, tmp;
+	
+	//  za IFS
+	protected final int maxIFS = 10500;
+//...........................................................................
+	
 
+// Getters / Setters:
 	public static Color getBarva() {
 		return barva;
 	}
@@ -25,10 +36,6 @@ public class Slika extends JPanel{
 	public static void setBarva(Color barva) {
 		Slika.barva = barva;
 	}
-
-	//	za Mandelbrot
-	private final int maxMandelbrot = 570;
-	private double zx, zy, cX, cY, tmp;
 
 	public String getMnozica() {
 		return mnozica;
@@ -38,46 +45,65 @@ public class Slika extends JPanel{
 		Slika.mnozica = mnozica;
 	}
 
-	protected static int dimensions;
-	protected static double realjuliaconst;
-	protected static double imagjuliaconst;
-
 	public static int getDimensions() {
 		return dimensions;
-	}
-
-	public static double getRealjuliaconst() {
-		return realjuliaconst;
-	}
-
-	public static void setRealjuliaconst(double realjuliaconst) {
-		Slika.realjuliaconst = realjuliaconst;
-	}
-
-	public static double getImagjuliaconst() {
-		return imagjuliaconst;
-	}
-
-	public static void setImagjuliaconst(double imagjuliaconst) {
-		Slika.imagjuliaconst = imagjuliaconst;
-	}
-
+	}	
+	
 	public static void setDimensions(int d) {
 		dimensions = d;
 	}
+
+	public static double getRe() {
+		return re;
+	}
+
+	public static void setRe(double realjuliaconst) {
+		Slika.re = realjuliaconst;
+	}
+
+	public static double getIm() {
+		return im;
+	}
+
+	public static void setIm(double imagjuliaconst) {
+		Slika.im = imagjuliaconst;
+	}
+//.......................................................................................................
+
 
 
 	public Slika() {
 		super();
 	}
+	
+	// Funkciji, ki pretvarjata piksel v koordinato
+	public double pretvoriX(int x){
+		return (((double)x*3)/dimensions)-1.5;
+	}
 
+	public double pretvoriY(int y){
+		return -pretvoriX(y);
+	}
+	
+	
+	// Inverzni funkciji, ki ju uporabimo pri IFS fraktalih:
+	public int pikselX(double x){
+		return (int) Math.floor((x+1.5)*((double) dimensions)/15) + dimensions/3;
+	}
+
+	public int pikselY(double y){
+		return dimensions - (int) Math.floor((y + 1.5)*((double) dimensions)/15);
+	}
+	
+	
+	// Funkcija, ki zgenerirano sliko nariše.
 	public void paint(Graphics g){
 		if(mnozica == null){
 			g.drawString("Navodila:", 20, 20);
-			g.drawString("⦁$izberi množico, ki jo želiš prikazati", 20, 40);
-			g.drawString("⦁$pritisni gumb nariši", 20, 60);
-			g.drawString("⦁če želiš izbrati barvo slike, stisni gumb barvaj in izberi barvo", 20, 80);
-			g.drawString("⦁$→če želiš shraniti svojo slikico, stisni gumb shrani in poimenuj svojo sliko", 20, 100);
+			g.drawString("* izberi množico, ki jo želiš prikazati", 20, 40);
+			g.drawString("* pritisni gumb nariši", 20, 60);
+			g.drawString("* če želiš izbrati barvo slike, stisni gumb barvaj in izberi barvo", 20, 80);
+			g.drawString("* če želiš shraniti svojo slikico, stisni gumb shrani in poimenuj svojo sliko", 20, 100);
 			g.drawString("Fraktali:", 20, 220);
 			g.drawString("Madelbrotova množica je v množica točk "
 					+ "v kompleksni ravnini, ", 40, 240);
@@ -85,10 +111,8 @@ public class Slika extends JPanel{
 			g.drawString("za katere orbita vrednosti 0 pod iteracijo kompleksnega kvadratnega", 40, 280);
 			g.drawString("polinoma zn+1 = zn2 + c ostaja omejena.", 40, 300);
 		}
-		//g.drawString("nariši svojo množico",0,0);
 		if(mnozica=="Juliajeva"){
 			sprehodJulia(g);
-//			Juliajeva.sprehod(g);
 		}
 		if(mnozica=="Mandelbrotova"){
 			sprehodMandelbrotova(g);
@@ -97,8 +121,11 @@ public class Slika extends JPanel{
 			sprehodIFS(g);
 		}
 	}
-
+	
+	
+// Sprehodi: (funkcije, ki generirajo sliko za posamezen fraktal - kliče jih paint)
 	private void sprehodJulia(Graphics g) {
+		//System.out.println("Julija se sprehaja");
 		if(barva == null){
 			barva = Color.yellow;
 		}
@@ -115,12 +142,12 @@ public class Slika extends JPanel{
 				i = 0;
 				while (i < maxJuliajeva) {
 					btemp = 2*a*b;
-					a = a*a - b*b + realjuliaconst;
-					b = btemp + imagjuliaconst;
+					a = a*a - b*b + re;
+					b = btemp + im;
 					if ( (a*a + b*b) > 4 ) {diverge=true; break;} 
 					i++;
 				} 
-//				zakomentirana verzija je prejšnja verzija (ne briši) - meni lepša ampak 
+//				zakomentirana verzija je prejĹˇnja verzija (ne briĹˇi) - meni lepĹˇa ampak 
 //				ne izrisuje ok na windowsih -.- in ne sharnjuje ok slike :(
 //				
 				if (diverge==true) {
@@ -148,8 +175,11 @@ public class Slika extends JPanel{
 			}
 		}
 	}
+	
+	
 
 	private void sprehodMandelbrotova(Graphics g) {
+		//System.out.println("Mandelbrot se sprehaja");
 		if(barva == null){
 			barva = Color.black;
 		}
@@ -196,23 +226,102 @@ public class Slika extends JPanel{
 			}
 		}
 	}
+	
 
+	//Definiramo množico z indeksi preslikav:
+	Integer[] items = {1,2,3,4};
+	
+	
+	// Napišemo funkcijo, ki vrača njihove uteži/verjetnosti, da bomo izvedli to preslikavo:
+	private double utez(int i){
+		if (i == 1) {return 0.01;}
+		else if (i == 2) {return 0.85;}
+		else if (i == 3) {return 0.07;}
+		else if (i == 4) {return 0.07;}
+		else {return 0;}
+	}
+	
+	// Funkcija, ki žreba eno izmed preslikav in upošteva danime verjetnosti:
+	private int zrebaj() {
+		int rez = -1;
+		double random = Math.random();
+		for (int i : items){
+		    random -= utez(i);
+		    if (random <= 0.0d)
+		    {
+		        rez = i;
+		        break;
+		    }
+		}
+		return rez;
+			
+	}	
+
+	
+	//Definicija preslikav:....................................................	
+	protected double preslikava1x (double x, double y) {
+		return 0.0;
+	}
+	
+	protected double preslikava1y (double x, double y) {
+		return 0.16*y;
+	}
+	
+	protected double preslikava2x (double x, double y) {
+		return 0.85*x + 0.04*y;
+	}
+	
+	protected double preslikava2y (double x, double y) {
+		return -0.04*x + 0.85*y +1.60;
+	}
+	
+	protected double preslikava3x (double x, double y) {
+		return 0.20*x - 0.26*y;
+	}
+	
+	protected double preslikava3y (double x, double y) {
+		return 0.23*x + 0.22*y +1.60;
+	}
+	
+	protected double preslikava4x (double x, double y) {
+		return -0.15*x + 0.28*y;
+	}
+	
+	protected double preslikava4y (double x, double y) {
+		return 0.26*x + 0.24*y +0.44;
+	}
+	//...........................................................................
 
 	private void sprehodIFS(Graphics g) {
-		for(int l=1;l< dimensions;l+=20){
-			for(int j=1;j< dimensions;j+=20){
-				g.setColor(Color.BLUE);
-				g.drawRect(l, j, 10, 10);
+		//System.out.println("IFS se sprehaja");
+		g.setColor(barva);
+		double zacetenX = 1.5;
+		double zacetenY = 1.5;
+		int rek = 0;
+		while (rek < maxIFS) {
+			g.drawRect(pikselX(zacetenX), pikselY(zacetenY), 1, 1);
+			int i = zrebaj();
+			if (i==1){
+				zacetenX = preslikava1x(zacetenX, zacetenY);
+				zacetenY = preslikava1y(zacetenX, zacetenY);
+				g.drawRect(pikselX(zacetenX), pikselY(zacetenY), 1, 1);
+			} else if (i==2){
+				zacetenX = preslikava2x(zacetenX, zacetenY);
+				zacetenY = preslikava2y(zacetenX, zacetenY);
+				g.drawRect(pikselX(zacetenX), pikselY(zacetenY), 1, 1);
+			} else if (i==3){
+				zacetenX = preslikava3x(zacetenX, zacetenY);
+				zacetenY = preslikava3y(zacetenX, zacetenY);
+				g.drawRect(pikselX(zacetenX), pikselY(zacetenY), 1, 1);
+			} else if (i==4){
+				zacetenX = preslikava4x(zacetenX, zacetenY);
+				zacetenY = preslikava4y(zacetenX, zacetenY);
+				g.drawRect(pikselX(zacetenX), pikselY(zacetenY), 1, 1);
 			}
+			rek +=1;
 		}
 	}
 
-	
-	public double pretvoriX(int x){
-		return (((double)x*3)/dimensions)-1.5;
-	}
 
-	public double pretvoriY(int y){
-		return -pretvoriX(y);
-	}
+
 }

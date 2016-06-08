@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
+import java.awt.event.ItemEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -14,6 +15,16 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 @SuppressWarnings("serial")
 public class Okno extends JFrame {
+	
+    private javax.swing.JComboBox<String> izbranaMnozica;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel platno;
+    private javax.swing.JTextField lambdaRe;
+    private javax.swing.JTextField lambdaIm;
+    private javax.swing.JButton narisi;
+    private javax.swing.JButton barvaj;
+    private javax.swing.JButton shrani;
+    
 
     /**
      * Creates new form NewFrame
@@ -21,23 +32,22 @@ public class Okno extends JFrame {
     public Okno() {
         initComponents();
         platno.setSize(500, 500);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
     
 //	komponente v oknu
     private void initComponents() {
         jPanel1 = new javax.swing.JPanel();	//platno, na katerem so gumbi in okna za pisat
-        lambdaRe = new javax.swing.JTextField();	//vnosno polje za realni del spremenljivke (Juliajeva množica)
-        lambdaIm = new javax.swing.JTextField();	//vnosno polje za imaginarni del spremenljivke (Juliajeva množica)
+        platno = new Slika();	//glavno platno, ki nariše sliko
         izbranaMnozica = new javax.swing.JComboBox<>();	//izbor množice, ki jo naj nariše
+        //Vnosna polja:
+        lambdaRe = new javax.swing.JTextField();	//za realni del spremenljivke (Juliajeva množica, IFS)
+        lambdaIm = new javax.swing.JTextField();	//za imaginarni del spremenljivke (Juliajeva množica, IFS)
+        //Gumbi:
         narisi = new javax.swing.JButton();	//gumb "nariši"
         barvaj = new javax.swing.JButton(); //gumb "barvaj"
         shrani = new javax.swing.JButton();	//gumb "shrani"
-        platno = new Slika();	//glavno platno, ki nariše sliko
         
-//      BRIŠI DEL
-//      lambdaIm2 = new javax.swing.JTextField(); če bi rabli več spremenljivk 
-//        lambdaIm2.setText("0.11");
-//        jPanel1.add(lambdaIm2, new java.awt.GridBagConstraints());
 
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentResized(java.awt.event.ComponentEvent evt) {
@@ -51,15 +61,24 @@ public class Okno extends JFrame {
         });
 
         jPanel1.setLayout(new java.awt.GridBagLayout());
+        
+        izbranaMnozica.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Juliajeva", "Mandelbrotova", "IFS" }));
+        jPanel1.add(izbranaMnozica, new java.awt.GridBagConstraints());
+        
+        izbranaMnozica.addItemListener(new java.awt.event.ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent evt) {
+				mnozicaActionPerformed(evt);
+				
+			}
+        });  
 
+        //Vnosna polja: ..............................................................
         lambdaRe.setText("-0.75");
         jPanel1.add(lambdaRe, new java.awt.GridBagConstraints());
 
         lambdaIm.setText("0.11");
         jPanel1.add(lambdaIm, new java.awt.GridBagConstraints());
-        
-        izbranaMnozica.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Juliajeva", "Mandelbrotova", "IFS" }));
-        jPanel1.add(izbranaMnozica, new java.awt.GridBagConstraints());
         
         narisi.setText("Narisi");
         narisi.addActionListener(new java.awt.event.ActionListener() {
@@ -92,7 +111,7 @@ public class Okno extends JFrame {
 
         pack();
     }
-
+    
     /**
      * Exit the Application
      */
@@ -109,20 +128,32 @@ public class Okno extends JFrame {
         Slika.setDimensions(platno.getHeight());
         }
     
-    public void narisiActionPerformed(ActionEvent evt){
-		Slika.setImagjuliaconst(Double.parseDouble(lambdaIm.getText()));
-    	Slika.setRealjuliaconst(Double.parseDouble(lambdaRe.getText()));
+	private void setSlika(){
+    	Slika.setIm(Double.parseDouble(lambdaIm.getText()));
+    	Slika.setRe(Double.parseDouble(lambdaRe.getText()));
     	Slika.setMnozica(izbranaMnozica.getSelectedItem().toString());
+    }
+    
+    protected void mnozicaActionPerformed(ItemEvent evt) {
+		if ((izbranaMnozica.getSelectedItem().toString() == "Mandelbrotova") || (izbranaMnozica.getSelectedItem().toString() == "IFS")) {
+    		lambdaRe.setVisible(false);
+            lambdaIm.setVisible(false);
+    	} else {
+    		lambdaRe.setVisible(true);
+            lambdaIm.setVisible(true);
+    	}	
+	}
+    
+    public void narisiActionPerformed(ActionEvent evt){
+    	setSlika();
     	this.repaint();
     }
     
     public void barvajActionPerformed(ActionEvent evt){
     	Color newColor = JColorChooser.showDialog(null, "Choose a color", Color.RED);
-    	System.out.println(newColor);;
+    	//System.out.println(newColor);;
     	Slika.setBarva(newColor);
-    	Slika.setImagjuliaconst(Double.parseDouble(lambdaIm.getText()));
-    	Slika.setRealjuliaconst(Double.parseDouble(lambdaRe.getText()));
-    	Slika.setMnozica(izbranaMnozica.getSelectedItem().toString());
+    	setSlika();
     	this.repaint();
     }
     
@@ -162,23 +193,13 @@ public class Okno extends JFrame {
     }
 
 
-    public javax.swing.JPanel getjPanel2() {
+    /*public javax.swing.JPanel getjPanel2() {
 		return platno;
 	}
-	public void setjPanel2(javax.swing.JPanel jPanel2) {
-		this.platno = jPanel2;
-	}
+	//public void setjPanel2(javax.swing.JPanel jPanel2) {
+		//this.platno = jPanel2;
+	//}
 	
-	
-
-    private javax.swing.JComboBox<String> izbranaMnozica;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel platno;
-    private javax.swing.JTextField lambdaRe;
-    private javax.swing.JTextField lambdaIm;
-//    private javax.swing.JTextField lambdaIm2;
-    private javax.swing.JButton narisi;
-    private javax.swing.JButton barvaj;
-    private javax.swing.JButton shrani;
+	*/
 
 }
