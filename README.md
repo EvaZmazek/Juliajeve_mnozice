@@ -5,13 +5,12 @@ Naredili bomo aplikacijo v javi, ki bo risala grafe osnovnih fraktalov, kot so: 
 
 ## Osnovni program:
 
-Osnovni program bo risal zgoraj omenjene fraktale, pri čemer bo uporabnik lahko podajal parametre (kot je recimo natančnost).
+Osnovni program bo risal zgoraj omenjene fraktale, pri čemer bo uporabnik lahko podajal parametre.
 
-## Možne razširitve:
+## Razširitve:
 
-Možne razširitve so:
-  * bolj napreden in hitrejši postopek risanja fraktala
-  * uporabnik lahko interaktivno povečuje podrobnosti v sliki
-  * uporabnik lahko izbere barvno paleto, s katero je narisan fraktal
-  * izvoz slike v datoteko
+Osnovnemu programu so dodane sledeče razširitve:
+  * Uporabnik lahko interaktivno povečuje podrobnosti v sliki s tem, da spreminja velikost okna.
+  * Uporabnik lahko izbere barvno paleto, s katero je narisan fraktal.
+  * Uporabnik lahko sliko shrani v datoteko.
 
