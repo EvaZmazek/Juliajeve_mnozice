@@ -31,7 +31,7 @@ public class Okno extends JFrame {
      */
     public Okno() {
         initComponents();
-        platno.setSize(500, 500);
+        platno.setSize(600, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
     
@@ -41,8 +41,8 @@ public class Okno extends JFrame {
         platno = new Slika();	//glavno platno, ki nariše sliko
         izbranaMnozica = new javax.swing.JComboBox<>();	//izbor množice, ki jo naj nariše
         //Vnosna polja:
-        lambdaRe = new javax.swing.JTextField();	//za realni del spremenljivke (Juliajeva množica, IFS)
-        lambdaIm = new javax.swing.JTextField();	//za imaginarni del spremenljivke (Juliajeva množica, IFS)
+        lambdaRe = new javax.swing.JTextField();	//za realni del spremenljivke (Juliajeva množica)
+        lambdaIm = new javax.swing.JTextField();	//za imaginarni del spremenljivke (Juliajeva množica)
         //Gumbi:
         narisi = new javax.swing.JButton();	//gumb "nariši"
         barvaj = new javax.swing.JButton(); //gumb "barvaj"
@@ -80,6 +80,7 @@ public class Okno extends JFrame {
         lambdaIm.setText("0.11");
         jPanel1.add(lambdaIm, new java.awt.GridBagConstraints());
         
+        
         narisi.setText("Narisi");
         narisi.addActionListener(new java.awt.event.ActionListener() {
         	public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -87,6 +88,7 @@ public class Okno extends JFrame {
         	}
         });
         jPanel1.add(narisi, new java.awt.GridBagConstraints());
+        
         
         barvaj.setText("Barvaj");
         barvaj.addActionListener(new java.awt.event.ActionListener() {
@@ -96,6 +98,7 @@ public class Okno extends JFrame {
         });
         jPanel1.add(barvaj, new java.awt.GridBagConstraints());
         
+        
         shrani.setText("Shrani");
         shrani.addActionListener(new java.awt.event.ActionListener() {
         	public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -104,6 +107,7 @@ public class Okno extends JFrame {
         });
         jPanel1.add(shrani, new java.awt.GridBagConstraints());
 
+        
         add(jPanel1, java.awt.BorderLayout.NORTH);
 
         platno.setBackground(new java.awt.Color(0, 0, 0));
@@ -120,7 +124,6 @@ public class Okno extends JFrame {
     }
 
     private void formComponentResized(java.awt.event.ComponentEvent evt) {
-        // TODO add your handling code here:
         int W = 4;  
         int H = 4;  
         Rectangle b = evt.getComponent().getBounds();
@@ -151,7 +154,6 @@ public class Okno extends JFrame {
     
     public void barvajActionPerformed(ActionEvent evt){
     	Color newColor = JColorChooser.showDialog(null, "Choose a color", Color.RED);
-    	//System.out.println(newColor);;
     	Slika.setBarva(newColor);
     	setSlika();
     	this.repaint();
@@ -176,30 +178,14 @@ public class Okno extends JFrame {
 				}
 			}
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();}
     }
     
     public static void main(String[] args) {
-        // TODO code application logic here
-        
         Okno frame = new Okno();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
-        frame.setSize(500, 500);
-        
-        //SlikaJulijajeva.setDimensions(frame.getWidth());
-        
+        frame.setSize(500, 500);        
     }
-
-
-    /*public javax.swing.JPanel getjPanel2() {
-		return platno;
-	}
-	//public void setjPanel2(javax.swing.JPanel jPanel2) {
-		//this.platno = jPanel2;
-	//}
-	
-	*/
 
 }
