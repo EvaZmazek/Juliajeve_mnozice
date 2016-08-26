@@ -6,9 +6,28 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class Slika extends JPanel{
 	
+	public int potenca(int koliko, int na) {
+		int i = 0;
+		int stevilo = 1;
+		while (i<na) {
+			stevilo = stevilo * koliko;
+			i += 1;
+		};
+		return stevilo;
+	};
+	
 // Parametri:
 	static String mnozica;
 	static Color barva;
+	static int xkomponenta;
+	static int ykomponenta;
+	static int steviloKlikov;
+	static int xmin;
+	static int ymin;
+	static int sirina;
+	
+
+
 	protected static int dimensions;
 
 	//	za Juliajevo
@@ -68,6 +87,54 @@ public class Slika extends JPanel{
 	public static void setIm(double imagjuliaconst) {
 		Slika.im = imagjuliaconst;
 	}
+	
+	public static int getXkomponenta() {
+		return xkomponenta;
+	}
+
+	public static void setXkomponenta(int xkomponenta) {
+		Slika.xkomponenta = xkomponenta;
+	}
+
+	public static int getYkomponenta() {
+		return ykomponenta;
+	}
+
+	public static void setYkomponenta(int ykomponenta) {
+		Slika.ykomponenta = ykomponenta;
+	}
+	
+	public static int getSteviloKlikov() {
+		return steviloKlikov;
+	}
+
+	public static void setSteviloKlikov(int steviloKlikov) {
+		Slika.steviloKlikov = steviloKlikov;
+	}
+	
+	public static int getXmin() {
+		return xmin;
+	}
+
+	public static void setXmin(int xmin) {
+		Slika.xmin = xmin;
+	}
+
+	public static int getYmin() {
+		return ymin;
+	}
+
+	public static void setYmin(int ymin) {
+		Slika.ymin = ymin;
+	}
+
+	public static int getSirina() {
+		return sirina;
+	}
+
+	public static void setSirina(int sirina) {
+		Slika.sirina = sirina;
+	}
 //.......................................................................................................
 
 
@@ -77,22 +144,30 @@ public class Slika extends JPanel{
 	}
 	
 	// Funkciji, ki pretvarjata piksel v koordinato
-	public double pretvoriX(int x){
-		return (((double)x*3)/dimensions)-1.5;
+	public double pretvoriX(int xxx){
+		return ((double)(xxx*3*sirina/dimensions)/dimensions)-(1.5*sirina/dimensions);
 	}
 
-	public double pretvoriY(int y){
-		return -pretvoriX(y);
+	public double pretvoriY(int yyy){
+		return -pretvoriX(yyy);
+	}
+	
+	public double pretvoriXM(int x){
+		return ((double)(x+sirina/2)*3/dimensions-1.5) ;
+	}
+
+	public double pretvoriYM(int y){
+		return -pretvoriXM(y);
 	}
 	
 	
 	// Inverzni funkciji, ki ju uporabimo pri IFS fraktalih:
 	public int pikselX(double x){
-		return (int) Math.floor((x+1.5)*((double) dimensions)/15) + dimensions/3;
+		return (int) Math.floor((x+1.5)*((double) dimensions*dimensions/sirina)/15) + dimensions*dimensions/sirina/3;
 	}
 
 	public int pikselY(double y){
-		return dimensions - (int) Math.floor((y + 1.5)*((double) dimensions)/15);
+		return dimensions*dimensions/sirina - (int) Math.floor((y + 1.5)*((double) dimensions*dimensions/sirina)/15);
 	}
 	
 	
@@ -135,9 +210,8 @@ public class Slika extends JPanel{
 		
 		for(int l=1;l< dimensions;l+=1){
 			for(int j=1;j< dimensions;j+=1){
-				double a = pretvoriX(l);
-				double b = pretvoriY(j);
-				g.setColor(Color.white);
+				double a = pretvoriX(l) + pretvoriXM(xmin);
+				double b = pretvoriY(j) + pretvoriYM(ymin);
 				i = 0;
 				while (i < maxJuliajeva) {
 					btemp = 2*a*b;
@@ -161,6 +235,7 @@ public class Slika extends JPanel{
 				}
 			}
 		}
+		System.out.println(xmin + "          " + ymin);
 	}
 	
 	
@@ -178,8 +253,8 @@ public class Slika extends JPanel{
 		for (int y = 0; y < dimensions; y++) {
 			for (int x = 0; x < dimensions; x++) {
 				zx = zy = 0;
-				cX = pretvoriX((x));
-				cY = pretvoriY((y));
+				cX = pretvoriX(x) + pretvoriXM(xmin);
+				cY = pretvoriY(y) + pretvoriYM(ymin);
 				int iter = maxMandelbrot;
 				g.setColor(Color.white);
 				while (zx * zx + zy * zy < 4 && iter > 0) {
@@ -227,7 +302,7 @@ public class Slika extends JPanel{
 		else {return 0;}
 	}
 	
-	// Funkcija, ki žreba eno izmed preslikav in upošteva danime verjetnosti:
+	// Funkcija, ki žreba eno izmed preslikav in upošteva dane verjetnosti:
 	private int zrebaj() {
 		int rez = -1;
 		double random = Math.random();
@@ -239,10 +314,8 @@ public class Slika extends JPanel{
 		        break;
 		    }
 		}
-		return rez;
-			
+		return rez;	
 	}	
-
 	
 	//Definicija preslikav:....................................................	
 	protected double preslikava1x (double x, double y) {
@@ -285,24 +358,24 @@ public class Slika extends JPanel{
 		double zacetenY = 1.5;
 		int rek = 0;
 		while (rek < maxIFS) {
-			g.drawRect(pikselX(zacetenX), pikselY(zacetenY), 1, 1);
+			g.drawRect(pikselX(zacetenX) + xmin, pikselY(zacetenY) + ymin, 1, 1);
 			int i = zrebaj();
 			if (i==1){
 				zacetenX = preslikava1x(zacetenX, zacetenY);
 				zacetenY = preslikava1y(zacetenX, zacetenY);
-				g.drawRect(pikselX(zacetenX), pikselY(zacetenY), 1, 1);
+				g.drawRect(pikselX(zacetenX) + xmin , pikselY(zacetenY) + ymin, 1, 1);
 			} else if (i==2){
 				zacetenX = preslikava2x(zacetenX, zacetenY);
 				zacetenY = preslikava2y(zacetenX, zacetenY);
-				g.drawRect(pikselX(zacetenX), pikselY(zacetenY), 1, 1);
+				g.drawRect(pikselX(zacetenX) + xmin, pikselY(zacetenY) + ymin , 1, 1);
 			} else if (i==3){
 				zacetenX = preslikava3x(zacetenX, zacetenY);
 				zacetenY = preslikava3y(zacetenX, zacetenY);
-				g.drawRect(pikselX(zacetenX), pikselY(zacetenY), 1, 1);
+				g.drawRect(pikselX(zacetenX) + xmin , pikselY(zacetenY) + ymin , 1, 1);
 			} else if (i==4){
 				zacetenX = preslikava4x(zacetenX, zacetenY);
 				zacetenY = preslikava4y(zacetenX, zacetenY);
-				g.drawRect(pikselX(zacetenX), pikselY(zacetenY), 1, 1);
+				g.drawRect(pikselX(zacetenX) + xmin , pikselY(zacetenY) + ymin , 1, 1);
 			}
 			rek +=1;
 		}
