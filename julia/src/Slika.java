@@ -145,7 +145,6 @@ public class Slika extends JPanel{
 	
 	// Funkciji, ki pretvarjata piksel v koordinato
 	public double pretvoriX(int xxx){
-//		return ((double)(xxx*3*sirina/dimensions)/dimensions)-(1.5*sirina/dimensions);
 		return ((double)(xxx*3*sirina/dimensions)/dimensions - 1.5);
 	}
 
@@ -175,17 +174,6 @@ public class Slika extends JPanel{
 	// Funkcija, ki zgenerirano sliko nariše.
 	public void paint(Graphics g){
 		if(mnozica == null){
-			g.drawString("Navodila:", 20, 20);
-			g.drawString("* izberi množico, ki jo želiš prikazati", 20, 40);
-			g.drawString("* pritisni gumb nariši", 20, 60);
-			g.drawString("* če želiš izbrati barvo slike, stisni gumb barvaj in izberi barvo", 20, 80);
-			g.drawString("* če želiš shraniti svojo slikico, stisni gumb shrani in poimenuj svojo sliko", 20, 100);
-			g.drawString("Fraktali:", 20, 220);
-			g.drawString("Madelbrotova množica je v množica točk "
-					+ "v kompleksni ravnini, ", 40, 240);
-			g.drawString("katere meja tvori fraktal. To je množica kompleksnih vrednosti c,", 40, 260);
-			g.drawString("za katere orbita vrednosti 0 pod iteracijo kompleksnega kvadratnega", 40, 280);
-			g.drawString("polinoma zn+1 = zn2 + c ostaja omejena.", 40, 300);
 		}
 		if(mnozica=="Juliajeva"){
 			sprehodJulia(g);
@@ -208,9 +196,7 @@ public class Slika extends JPanel{
 		float G = barva.getGreen()/255;
 		float B = barva.getBlue()/255;
 		float alpha = barva.getAlpha()/255;
-		
-		System.out.println(xmin + " " + pretvoriXM(xmin) + " sirina: " + sirina + " dimensions: " + dimensions);
-		
+				
 		for(int l=1;l< dimensions;l+=1){
 			for(int j=1;j< dimensions;j+=1){
 				double a = pretvoriX(l) + pretvoriXM(xmin);
@@ -238,7 +224,6 @@ public class Slika extends JPanel{
 				}
 			}
 		}
-		System.out.println(xmin + "          " + ymin);
 	}
 	
 	
@@ -361,24 +346,24 @@ public class Slika extends JPanel{
 		double zacetenY = 1.5;
 		int rek = 0;
 		while (rek < maxIFS) {
-			g.drawRect(pikselX(zacetenX) + xmin, pikselY(zacetenY) + ymin, 1, 1);
+			g.drawRect(pikselX(zacetenX) - xmin, pikselY(zacetenY) - ymin, 1, 1);
 			int i = zrebaj();
 			if (i==1){
 				zacetenX = preslikava1x(zacetenX, zacetenY);
 				zacetenY = preslikava1y(zacetenX, zacetenY);
-				g.drawRect(pikselX(zacetenX) + xmin , pikselY(zacetenY) + ymin, 1, 1);
+				g.drawRect(pikselX(zacetenX) - xmin , pikselY(zacetenY) - ymin, 1, 1);
 			} else if (i==2){
 				zacetenX = preslikava2x(zacetenX, zacetenY);
 				zacetenY = preslikava2y(zacetenX, zacetenY);
-				g.drawRect(pikselX(zacetenX) + xmin, pikselY(zacetenY) + ymin , 1, 1);
+				g.drawRect(pikselX(zacetenX) - xmin, pikselY(zacetenY) - ymin , 1, 1);
 			} else if (i==3){
 				zacetenX = preslikava3x(zacetenX, zacetenY);
 				zacetenY = preslikava3y(zacetenX, zacetenY);
-				g.drawRect(pikselX(zacetenX) + xmin , pikselY(zacetenY) + ymin , 1, 1);
+				g.drawRect(pikselX(zacetenX) - xmin , pikselY(zacetenY) - ymin , 1, 1);
 			} else if (i==4){
 				zacetenX = preslikava4x(zacetenX, zacetenY);
 				zacetenY = preslikava4y(zacetenX, zacetenY);
-				g.drawRect(pikselX(zacetenX) + xmin , pikselY(zacetenY) + ymin , 1, 1);
+				g.drawRect(pikselX(zacetenX) - xmin , pikselY(zacetenY) - ymin , 1, 1);
 			}
 			rek +=1;
 		}

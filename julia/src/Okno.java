@@ -259,28 +259,19 @@ public class Okno extends JFrame implements MouseListener {
 		this.x = e.getX();
 		this.y = e.getY();
 		
-		
-		
-//		this.steviloKlikov += 1;
-//
-		Slika.setXmin(Slika.getXmin() + x*Slika.getSirina()/platno.getHeight() - Integer.parseInt(zoomsirina.getText())/4);
-		Slika.setYmin(Slika.getYmin() + y*Slika.getSirina()/platno.getHeight() - Integer.parseInt(zoomsirina.getText())/4);
-		this.zoomxmin.setText("" + Slika.getXmin());
-		this.zoomymin.setText("" + Slika.getYmin());
-		
-		Slika.setSirina(Slika.sirina/2);		
-		this.zoomsirina.setText("" + Slika.getSirina());
-		
-//		System.out.println(Slika.getSirina());
-//		System.out.println(e.getX() + " " + e.getY());
-		setSlika();
-		this.repaint();
-		
+		if(this.izbranaMnozica.getSelectedItem().toString() != "IFS"){
+			Slika.setXmin(Slika.getXmin() + x*Slika.getSirina()/platno.getHeight() - Integer.parseInt(zoomsirina.getText())/4);
+			Slika.setYmin(Slika.getYmin() + y*Slika.getSirina()/platno.getHeight() - Integer.parseInt(zoomsirina.getText())/4);
+			this.zoomxmin.setText("" + Slika.getXmin());
+			this.zoomymin.setText("" + Slika.getYmin());
+			
+			Slika.setSirina(Slika.sirina/2);		
+			this.zoomsirina.setText("" + Slika.getSirina());
+	
+			setSlika();
+			this.repaint();
+		} 
 
-		
-//		System.out.println(e.getX()+" "+e.getY());
-////		setSlika();
-//		this.repaint();
 	}
 	
 	public int potenca(int koliko, int na) {
