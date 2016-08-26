@@ -263,8 +263,8 @@ public class Okno extends JFrame implements MouseListener {
 		
 //		this.steviloKlikov += 1;
 //
-		Slika.setXmin(Slika.getXmin() + x - Integer.parseInt(zoomsirina.getText())/4);
-		Slika.setYmin(Slika.getYmin() + y - Integer.parseInt(zoomsirina.getText())/4);
+		Slika.setXmin(Slika.getXmin() + x*Slika.getSirina()/platno.getHeight() - Integer.parseInt(zoomsirina.getText())/4);
+		Slika.setYmin(Slika.getYmin() + y*Slika.getSirina()/platno.getHeight() - Integer.parseInt(zoomsirina.getText())/4);
 		this.zoomxmin.setText("" + Slika.getXmin());
 		this.zoomymin.setText("" + Slika.getYmin());
 		

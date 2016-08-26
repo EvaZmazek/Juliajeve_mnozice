@@ -145,7 +145,8 @@ public class Slika extends JPanel{
 	
 	// Funkciji, ki pretvarjata piksel v koordinato
 	public double pretvoriX(int xxx){
-		return ((double)(xxx*3*sirina/dimensions)/dimensions)-(1.5*sirina/dimensions);
+//		return ((double)(xxx*3*sirina/dimensions)/dimensions)-(1.5*sirina/dimensions);
+		return ((double)(xxx*3*sirina/dimensions)/dimensions - 1.5);
 	}
 
 	public double pretvoriY(int yyy){
@@ -153,7 +154,7 @@ public class Slika extends JPanel{
 	}
 	
 	public double pretvoriXM(int x){
-		return ((double)(x+sirina/2)*3/dimensions-1.5) ;
+		return ((double)x*3/dimensions) ;
 	}
 
 	public double pretvoriYM(int y){
@@ -207,6 +208,8 @@ public class Slika extends JPanel{
 		float G = barva.getGreen()/255;
 		float B = barva.getBlue()/255;
 		float alpha = barva.getAlpha()/255;
+		
+		System.out.println(xmin + " " + pretvoriXM(xmin) + " sirina: " + sirina + " dimensions: " + dimensions);
 		
 		for(int l=1;l< dimensions;l+=1){
 			for(int j=1;j< dimensions;j+=1){
