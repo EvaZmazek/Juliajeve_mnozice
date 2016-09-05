@@ -6,16 +6,6 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class Slika extends JPanel{
 	
-	public int potenca(int koliko, int na) {
-		int i = 0;
-		int stevilo = 1;
-		while (i<na) {
-			stevilo = stevilo * koliko;
-			i += 1;
-		};
-		return stevilo;
-	};
-	
 // Parametri:
 	static String mnozica;
 	static Color barva;
@@ -26,11 +16,9 @@ public class Slika extends JPanel{
 	static int ymin;
 	static int sirina;
 	
-
-
 	protected static int dimensions;
 
-	//	za Juliajevo
+//	za Juliajevo
 	static double re; 
 	static double im;  
 	double btemp;
@@ -38,11 +26,11 @@ public class Slika extends JPanel{
 	int i;	
 	protected final int maxJuliajeva = 570;
 
-	//	za Mandelbrot
+//	za Mandelbrot
 	private final int maxMandelbrot = 570;
 	private double zx, zy, cX, cY, tmp;
 	
-	//  za IFS
+//  za IFS
 	protected final int maxIFS = 10500;
 //...........................................................................
 	
@@ -145,7 +133,7 @@ public class Slika extends JPanel{
 	
 	// Funkciji, ki pretvarjata piksel v koordinato
 	public double pretvoriX(int xxx){
-		return ((double)(xxx*3*sirina/dimensions)/dimensions - 1.5);
+		return ((double)(xxx*3.0*(double)sirina/(double)dimensions)/(double)dimensions - 1.5);
 	}
 
 	public double pretvoriY(int yyy){
@@ -153,7 +141,7 @@ public class Slika extends JPanel{
 	}
 	
 	public double pretvoriXM(int x){
-		return ((double)x*3/dimensions) ;
+		return ((double)x*3.0/(double)dimensions) ;
 	}
 
 	public double pretvoriYM(int y){
